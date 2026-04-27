@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Training Portal — Pre-Uni New College</title>
+<meta name="description" content="Pre-Uni New College internal training materials portal" />
+<meta property="og:title" content="Training Portal — Pre-Uni New College" />
+<meta property="og:description" content="All internal training PTs, manuals, and meeting recordings in one place." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Training Portal — Pre-Uni New College" />
+<meta name="twitter:description" content="All internal training PTs, manuals, and meeting recordings in one place." />
+<meta name="twitter:image" content="og-image.jpg" />
+<style>
+:root {
+  --bg: #0a0f1f;
+  --bg-2: #0f1730;
+  --panel: #182142;
+  --panel-2: #20295a;
+  --line: rgba(255,255,255,0.08);
+  --text: #f3f5fb;
+  --muted: #99a3c2;
+  --accent: #5fa8ff;
+  --accent-2: #7df0c6;
+  --warning: #ffd98a;
+  --shadow: 0 18px 45px rgba(0,0,0,0.32);
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  font-family: 'Inter', -apple-system, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  background:
+    radial-gradient(ellipse at 25% 0%, rgba(95,168,255,.12), transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(125,240,198,.08), transparent 50%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.55;
+}
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 32px 24px 80px; }
+
+/* Header */
+.hero {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.brand-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.logo-dot { width:42px; height:42px; border-radius:13px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; font-weight:900; color:#0a0f1f; font-size:20px; }
+.brand h1 { margin:0; font-size: clamp(24px,3vw,36px); letter-spacing:-0.03em; line-height:1.1; }
+.brand .subtitle { color: var(--muted); font-size: 13px; margin-top:2px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;}
+.lead { color: var(--muted); font-size: 16px; max-width: 720px; margin: 14px 0 0; }
+.lead strong { color: var(--text); }
+
+/* Stats */
+.stats { display:flex; gap:18px; margin-top:22px; flex-wrap:wrap; }
+.stat { background: rgba(255,255,255,.04); border:1px solid var(--line); padding: 10px 16px; border-radius: 999px; font-size: 13px; color: var(--muted); }
+.stat strong { color: var(--text); font-weight: 800; margin-right: 6px;}
+
+/* Controls */
+.controls {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 22px; align-items: center;
+}
+.search {
+  flex: 1 1 260px; min-width: 220px;
+  background: rgba(255,255,255,.05); border: 1px solid var(--line);
+  border-radius: 14px; padding: 11px 16px; color: var(--text); font-size: 14px;
+  outline: none; transition: border-color .15s;
+}
+.search:focus { border-color: var(--accent); }
+.sort-select {
+  background: rgba(255,255,255,.05); border: 1px solid var(--line);
+  border-radius: 14px; padding: 11px 14px; color: var(--text); font-size: 14px;
+  outline: none; min-width: 200px;
+}
+.sort-select option { background: var(--bg-2); }
+.refresh-btn {
+  background: rgba(125,240,198,0.1); color: var(--accent-2);
+  border: 1px solid rgba(125,240,198,0.25);
+  border-radius: 14px; padding: 11px 16px; font-size:13px; font-weight:700; cursor: pointer;
+  transition: 0.15s;
+}
+.refresh-btn:hover { background: rgba(125,240,198,0.18); }
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: var(--shadow);
+  transition: transform .18s, border-color .18s, box-shadow .18s;
+  position: relative;
+}
+.card:hover { transform: translateY(-3px); border-color: rgba(95,168,255,.4); }
+.card .thumb {
+  aspect-ratio: 1200/630;
+  background: linear-gradient(135deg, var(--bg-2), var(--panel)) center/cover;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.card .thumb img { width: 100%; height: 100%; object-fit: cover; display:block; }
+.card .thumb-fallback {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  color: var(--muted); font-size: 13px; font-weight:700;
+  background: linear-gradient(135deg, rgba(95,168,255,.08), rgba(125,240,198,.05));
+}
+.card .body { padding: 16px 18px 18px; flex: 1; display:flex; flex-direction: column; gap: 8px; }
+.card h3 { margin: 0; font-size: 17px; line-height: 1.32; letter-spacing: -0.012em; }
+.meta { font-size: 12px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.meta .ver { background: rgba(255,217,138,.14); color: var(--warning); padding: 3px 8px; border-radius: 999px; font-weight: 800; }
+.meta .date { font-weight:600; }
+.actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: 700;
+  border: 1px solid transparent; cursor: pointer; transition: 0.15s;
+}
+.btn.primary { background: var(--accent); color: #0a0f1f; }
+.btn.primary:hover { background: #74b3ff; }
+.btn.youtube { background: rgba(255,90,90,.12); color: #ff8a8a; border-color: rgba(255,90,90,.3); }
+.btn.youtube:hover { background: rgba(255,90,90,.22); }
+
+.empty {
+  text-align:center; padding: 80px 20px; color: var(--muted);
+  border: 2px dashed var(--line); border-radius: var(--radius);
+}
+.loading { text-align:center; padding: 60px 20px; color: var(--muted); }
+.loading::after { content: '...'; animation: dots 1s infinite; }
+@keyframes dots { 0%,20% {content:'.';} 40%{content:'..';} 60%,100%{content:'...';} }
+
+/* Footer */
+.footer {
+  margin-top: 56px; padding-top: 22px;
+  border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 13px;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer a { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 22px 14px 80px; }
+  .grid { grid-template-columns: 1fr; }
+  .controls { flex-direction: column; align-items: stretch; }
+  .sort-select, .search, .refresh-btn { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Source-of-truth: a Google Sheet published as CSV.
+     Update SHEET_CSV_URL below after you publish your sheet to the web.
+     File → Share → Publish to web → CSV → copy that URL here. -->
+<script>
+const CONFIG = {
+  // Replace this with your Google Sheet CSV publish URL.
+  // Until set, the portal uses INITIAL_DATA below.
+  SHEET_CSV_URL: '',
+  // Leave true so the portal still works while you set up the Sheet.
+  USE_INITIAL_FALLBACK: true,
+};
+
+// Seed list — current portfolio. Add/edit here OR migrate to the Google Sheet.
+// Columns: title, date (YYYY-MM-DD), version, ptUrl, youtubeUrl (optional), thumbUrl (optional)
+const INITIAL_DATA = [
+  {
+    title: '회사 설명',
+    date: '2026-03-20',
+    version: '20260320',
+    ptUrl: 'https://pteifrsu.gensparkspace.com/',
+    youtubeUrl: '',
+    thumbUrl: ''
+  },
+  {
+    title: 'MR TS 문제 생성 프로세스',
+    date: '2026-04-22',
+    version: '',
+    ptUrl: 'https://admirable-salamander-28fddc.netlify.app/',
+    youtubeUrl: 'https://youtu.be/oNrEx3NlGL0',
+    thumbUrl: ''
+  },
+  {
+    title: 'Thinking Skill Category 설명',
+    date: '2026-04-23',
+    version: 'v1.1',
+    ptUrl: 'https://betterfuture2025.github.io/Staff-TH-guide/',
+    youtubeUrl: 'https://youtu.be/qKKLnSG3Gl0',
+    thumbUrl: 'https://betterfuture2025.github.io/Staff-TH-guide/assets/og-image.jpg'
+  },
+  {
+    title: 'NSW Primary English Overall Map',
+    date: '2026-04-24',
+    version: 'v6',
+    ptUrl: 'https://betterfuture2025.github.io/NSW-Primary-English-Overall-Map/',
+    youtubeUrl: 'https://youtu.be/XbPKFPRoPJA',
+    thumbUrl: 'https://betterfuture2025.github.io/NSW-Primary-English-Overall-Map/assets/og-image.jpg'
+  },
+  {
+    title: 'AI Error Handling Manual',
+    date: '2026-04-26',
+    version: '',
+    ptUrl: 'https://betterfuture2025.github.io/AI-Error-Handling-Manual/',
+    youtubeUrl: '',
+    thumbUrl: 'https://betterfuture2025.github.io/AI-Error-Handling-Manual/assets/og-image.jpg'
+  },
+  {
+    title: 'Word Template Workflow',
+    date: '2026-04-26',
+    version: '',
+    ptUrl: 'https://betterfuture2025.github.io/Word-Template-Workflow/',
+    youtubeUrl: '',
+    thumbUrl: 'https://betterfuture2025.github.io/Word-Template-Workflow/assets/og-image.jpg'
+  },
+  {
+    title: '2026 OKTA Tasmania Conference',
+    date: '2026-04-26',
+    version: '',
+    ptUrl: 'https://betterfuture2025.github.io/okta-tasmania-2026/',
+    youtubeUrl: '',
+    thumbUrl: 'https://betterfuture2025.github.io/okta-tasmania-2026/assets/og-image.jpg'
+  },
+];
+</script>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="brand-row">
+      <div class="logo-dot">P</div>
+      <div class="brand">
+        <div class="subtitle">PRE-UNI NEW COLLEGE</div>
+        <h1>Training Portal</h1>
+      </div>
+    </div>
+    <p class="lead">All internal training materials, PTs, manuals and meeting recordings — in one place. <strong>Click any card to open the protected resource.</strong></p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="controls">
+    <input class="search" id="search" type="search" placeholder="🔍  Search by title, date or version..." />
+    <select class="sort-select" id="sort">
+      <option value="date-desc">최신순 (Date ↓)</option>
+      <option value="date-asc">오래된순 (Date ↑)</option>
+      <option value="title-asc">제목 A→Z</option>
+      <option value="title-desc">제목 Z→A</option>
+    </select>
+    <button class="refresh-btn" id="refresh">↻ Refresh</button>
+  </div>
+
+  <div id="grid" class="grid"></div>
+  <div id="empty" class="empty" hidden>No items match your search.</div>
+
+  <footer class="footer">
+    <div>© Pre-Uni New College · Internal portal</div>
+    <div>Data: <span id="source">seed list</span></div>
+  </footer>
+</div>
+
+<script>
+const $ = sel => document.querySelector(sel);
+const grid = $('#grid'), emptyEl = $('#empty'), statsEl = $('#stats'), sourceEl = $('#source');
+const searchEl = $('#search'), sortEl = $('#sort'), refreshBtn = $('#refresh');
+
+let allItems = [];
+let filtered = [];
+
+// CSV parser (handles quoted fields with commas/newlines).
+function parseCSV(text) {
+  const rows = [];
+  let cur = [], field = '', inQuote = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuote) {
+      if (c === '"' && text[i+1] === '"') { field += '"'; i++; }
+      else if (c === '"') inQuote = false;
+      else field += c;
+    } else {
+      if (c === '"') inQuote = true;
+      else if (c === ',') { cur.push(field); field = ''; }
+      else if (c === '\n') { cur.push(field); rows.push(cur); cur = []; field = ''; }
+      else if (c === '\r') {}
+      else field += c;
+    }
+  }
+  if (field || cur.length) { cur.push(field); rows.push(cur); }
+  return rows;
+}
+
+// Map CSV rows to item objects. Expects header row matching the original Sheet:
+// 번호 | Date | 내용 | PT link | 회의 Youtube | Version | (optional) Thumb
+function rowsToItems(rows) {
+  if (!rows || rows.length < 2) return [];
+  const header = rows[0].map(h => (h||'').trim().toLowerCase());
+  const idx = name => header.findIndex(h => h.includes(name));
+  const iDate = idx('date'), iTitle = idx('내용') !== -1 ? idx('내용') : idx('title');
+  const iPT = idx('pt') !== -1 ? idx('pt') : idx('link');
+  const iYT = idx('youtube') !== -1 ? idx('youtube') : idx('youtu');
+  const iVer = idx('version');
+  const iThumb = idx('thumb');
+  const items = [];
+  for (let r = 1; r < rows.length; r++) {
+    const row = rows[r];
+    if (!row || row.every(c => !c || !c.trim())) continue;
+    const ptUrl = (row[iPT] || '').trim();
+    const title = (row[iTitle] || '').trim();
+    if (!title || !ptUrl) continue;
+    items.push({
+      title,
+      date: (row[iDate] || '').trim().replace(/\//g,'-'),
+      version: (row[iVer] || '').trim(),
+      ptUrl,
+      youtubeUrl: (row[iYT] || '').trim(),
+      thumbUrl: (iThumb >= 0 ? (row[iThumb] || '').trim() : ''),
+    });
+  }
+  return items;
+}
+
+function inferThumb(item) {
+  if (item.thumbUrl) return item.thumbUrl;
+  // Heuristic: betterfuture2025.github.io sites have /assets/og-image.jpg
+  try {
+    const u = new URL(item.ptUrl);
+    if (u.hostname === 'betterfuture2025.github.io') {
+      const path = u.pathname.replace(/\/$/, '');
+      return `${u.origin}${path}/assets/og-image.jpg`;
+    }
+  } catch (e) {}
+  return '';
+}
+
+function escHtml(s) {
+  return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  const m = d.match(/(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+  if (!m) return d;
+  const [, y, mo, da] = m;
+  return `${y}.${mo.padStart(2,'0')}.${da.padStart(2,'0')}`;
+}
+
+function renderGrid() {
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    emptyEl.hidden = false;
+    return;
+  }
+  emptyEl.hidden = true;
+  grid.innerHTML = filtered.map(it => {
+    const thumb = inferThumb(it);
+    const thumbHtml = thumb
+      ? `<img src="${escHtml(thumb)}" alt="${escHtml(it.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+         <div class="thumb-fallback" style="display:none;">${escHtml(it.title)}</div>`
+      : `<div class="thumb-fallback" style="display:grid;">${escHtml(it.title)}</div>`;
+    const meta = [
+      it.date ? `<span class="date">📅 ${fmtDate(it.date)}</span>` : '',
+      it.version ? `<span class="ver">${escHtml(it.version)}</span>` : '',
+    ].filter(Boolean).join('');
+    const ytBtn = it.youtubeUrl
+      ? `<a class="btn youtube" href="${escHtml(it.youtubeUrl)}" target="_blank" rel="noopener">▶  YouTube</a>` : '';
+    return `
+      <article class="card">
+        <a class="thumb" href="${escHtml(it.ptUrl)}" target="_blank" rel="noopener">${thumbHtml}</a>
+        <div class="body">
+          <h3>${escHtml(it.title)}</h3>
+          <div class="meta">${meta}</div>
+          <div class="actions">
+            <a class="btn primary" href="${escHtml(it.ptUrl)}" target="_blank" rel="noopener">Open PT →</a>
+            ${ytBtn}
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+function applyFilterSort() {
+  const q = (searchEl.value || '').trim().toLowerCase();
+  filtered = allItems.filter(it => {
+    if (!q) return true;
+    return [it.title, it.date, it.version, it.ptUrl].some(v => (v||'').toLowerCase().includes(q));
+  });
+  const mode = sortEl.value;
+  filtered.sort((a, b) => {
+    if (mode === 'date-desc') return (b.date || '').localeCompare(a.date || '');
+    if (mode === 'date-asc')  return (a.date || '').localeCompare(b.date || '');
+    if (mode === 'title-asc') return a.title.localeCompare(b.title);
+    if (mode === 'title-desc') return b.title.localeCompare(a.title);
+    return 0;
+  });
+  renderGrid();
+  updateStats();
+}
+
+function updateStats() {
+  const total = allItems.length;
+  const ytCount = allItems.filter(i => i.youtubeUrl).length;
+  statsEl.innerHTML = `
+    <span class="stat"><strong>${total}</strong> resources</span>
+    <span class="stat"><strong>${ytCount}</strong> with video</span>
+    <span class="stat"><strong>${filtered.length}</strong> showing</span>
+  `;
+}
+
+async function loadData() {
+  let items = [];
+  if (CONFIG.SHEET_CSV_URL) {
+    try {
+      const res = await fetch(CONFIG.SHEET_CSV_URL + '&t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      items = rowsToItems(parseCSV(text));
+      sourceEl.textContent = 'Google Sheet (live)';
+    } catch (e) {
+      console.warn('Sheet fetch failed, falling back to seed list:', e);
+      sourceEl.textContent = 'seed list (Sheet fetch failed)';
+    }
+  }
+  if (items.length === 0 && CONFIG.USE_INITIAL_FALLBACK) {
+    items = INITIAL_DATA.slice();
+    if (!CONFIG.SHEET_CSV_URL) sourceEl.textContent = 'seed list';
+  }
+  allItems = items;
+  applyFilterSort();
+}
+
+searchEl.addEventListener('input', applyFilterSort);
+sortEl.addEventListener('change', applyFilterSort);
+refreshBtn.addEventListener('click', () => {
+  refreshBtn.disabled = true;
+  refreshBtn.textContent = '↻ Loading...';
+  loadData().finally(() => {
+    refreshBtn.disabled = false;
+    refreshBtn.textContent = '↻ Refresh';
+  });
+});
+
+loadData();
+</script>
+</body>
+</html>
